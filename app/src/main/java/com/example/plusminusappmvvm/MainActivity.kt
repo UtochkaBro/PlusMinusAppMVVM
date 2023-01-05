@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import com.example.plusminusappmvvm.navigation.NotesNavHost
 import com.example.plusminusappmvvm.ui.theme.PlusMinusAppMVVMTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,27 +19,36 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PlusMinusAppMVVMTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(text = "NotesAPP")
+                            },
+                            backgroundColor = Color.Blue,
+                            contentColor = Color.White,
+                            elevation = 12.dp
+                        )
+                    },
+                    content = {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colors.background
+                        ) {
+                            NotesNavHost()
+                        }
+                    }
+                )
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     PlusMinusAppMVVMTheme {
-        Greeting("Android")
+
     }
 }
