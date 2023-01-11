@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
 import com.example.plusminusappmvvm.navigation.NotesNavHost
 import com.example.plusminusappmvvm.ui.theme.PlusMinusAppMVVMTheme
 
@@ -23,14 +22,13 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         TopAppBar(
                             title = {
-                                Text(text = "NotesAPP")
+                                Text(text = "Notes App")
                             },
-                            backgroundColor = Color.Blue,
+                            backgroundColor = Color.Cyan,
                             contentColor = Color.White,
                             elevation = 12.dp
                         )
-                    },
-                    content = {
+                    }, content = {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
@@ -42,13 +40,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PlusMinusAppMVVMTheme {
-
+    @Preview(showBackground = true)
+    @Composable
+    fun DefaultPreview(){
+        PlusMinusAppMVVMTheme() {
+            
+        }
     }
 }
+
