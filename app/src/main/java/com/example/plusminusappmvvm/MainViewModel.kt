@@ -2,16 +2,15 @@ package com.example.plusminusappmvvm
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.plusminusappmvvm.database.room.AppRoomDatabase
 import com.example.plusminusappmvvm.database.room.repository.RoomRepository
 import com.example.plusminusappmvvm.model.Note
 import com.example.plusminusappmvvm.utils.REPOSITORY
 import com.example.plusminusappmvvm.utils.TYPE_FIREBASE
 import com.example.plusminusappmvvm.utils.TYPE_ROOM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -27,6 +26,18 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
             }
         }
     }
+
+    fun addNote(note: Note, onSuccess: () -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            REPOSITORY.create(note = note) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun readAllNotes() = REPOSITORY.readAll
 }
 
 class MainViewModelFactory(private val application: Application) : ViewModelProvider.Factory{

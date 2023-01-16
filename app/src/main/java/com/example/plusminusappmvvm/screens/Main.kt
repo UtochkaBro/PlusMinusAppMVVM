@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.plusminusappmvvm.MainViewModel
@@ -31,10 +30,10 @@ import com.example.plusminusappmvvm.navigation.NavRoute
 import com.example.plusminusappmvvm.ui.theme.PlusMinusAppMVVMTheme
 
 @Composable
-fun MainScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val mViewModel: MainViewModel =
-        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
+
+    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -55,11 +54,11 @@ fun MainScreen(navController: NavHostController) {
 //            NoteItem(title = "Title7", subTitle = "SubTitle is just fuckin text for title 7", navController = navController)
 //
 //        }
-//        LazyColumn{
-//            items(notes) {note ->
-//                NoteItem(note = note, navController = navController)
-//            }
-//        }
+        LazyColumn{
+            items(notes) {note ->
+                NoteItem(note = note, navController = navController)
+            }
+        }
         }
 }
 
@@ -92,6 +91,10 @@ fun NoteItem(note: Note, navController: NavHostController) {
 @Composable
 fun prevMainScreen(){
     PlusMinusAppMVVMTheme() {
-        MainScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
+        MainScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }
